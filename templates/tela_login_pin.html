@@ -109,16 +109,21 @@
             // Em produção, isso fará um "fetch('/login')" para o app.py
             // Por agora, simulei 2 usuários no Javascript para você testar a navegação!
             
-            const PIN_MECANICO = "1234";
-            const PIN_OPERADOR = "5678";
+            const PIN_MECANICO = "1040";
+            const PIN_OPERADOR = "1041";
+            const PIN_OPERADOR = "1042";
 
             if (currentPin === PIN_MECANICO) {
                 // Roteia para a tela de entrega técnica que fizemos antes
-                window.location.href = "/tela_liberacao_oficina.html"; 
+                window.location.href = "/tela_liberacao_oficina.html"; // Substitua pelo nome do seu HTML do mecânico
             } 
             else if (currentPin === PIN_OPERADOR) {
                 // Roteia para a tela de seleção de equipamento normal
                 window.location.href = "/tela_selecao_equipamento.html"; // Substitua pelo nome do seu HTML de operador
+            } 
+            else if (currentPin === PIN_GESTÃO) {
+                // Roteia para a tela de seleção de equipamento normal
+                window.location.href = "/tela_selecao_equipamento.html"; // Substitua pelo nome do seu HTML do gestor
             } 
             else {
                 mostrarErro();
