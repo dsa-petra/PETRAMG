@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login RDO - Petra Agregados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 h-screen flex flex-col items-center justify-center font-sans antialiased">
+
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden">
+        
+        <!-- Cabeçalho -->
+        <div class="bg-amber-500 p-6 text-center">
+            <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center shadow-inner mb-3">
+                <i class="fas fa-hard-hat text-amber-500 text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight">RDO PETRA</h1>
+            <p class="text-amber-900 text-sm font-medium">Controle de Frota e Manutenção</p>
+        </div>
+
+        <!-- Área do PIN -->
+        <div class="p-8">
+            <div class="mb-8 text-center">
+                <label class="block text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">Insira seu PIN</label>
+                <div class="flex justify-center gap-3" id="pinDisplay">
+                    <!-- As bolinhas do PIN aparecerão aqui -->
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 pin-dot"></div>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 pin-dot"></div>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 pin-dot"></div>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 pin-dot"></div>
+                </div>
+                <p id="mensagemErro" class="text-red-500 text-sm font-semibold mt-4 h-5 opacity-0 transition-opacity">PIN incorreto. Tente novamente.</p>
+            </div>
+
+            <!-- Teclado Numérico -->
+            <div class="grid grid-cols-3 gap-3">
+                <button onclick="addNumber(1)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">1</button>
+                <button onclick="addNumber(2)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">2</button>
+                <button onclick="addNumber(3)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">3</button>
+                
+                <button onclick="addNumber(4)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">4</button>
+                <button onclick="addNumber(5)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">5</button>
+                <button onclick="addNumber(6)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">6</button>
+                
+                <button onclick="addNumber(7)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">7</button>
+                <button onclick="addNumber(8)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">8</button>
+                <button onclick="addNumber(9)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">9</button>
+                
+                <button onclick="clearPin()" class="h-14 text-xl font-semibold bg-red-50 text-red-500 rounded-xl hover:bg-red-100 active:bg-red-200 transition-colors"><i class="fas fa-backspace"></i></button>
+                <button onclick="addNumber(0)" class="h-14 text-2xl font-semibold bg-slate-100 rounded-xl hover:bg-slate-200 active:bg-slate-300 transition-colors">0</button>
+                <button onclick="submitPin()" class="h-14 text-xl font-semibold bg-amber-500 text-white rounded-xl hover:bg-amber-600 active:bg-amber-700 transition-colors shadow-md"><i class="fas fa-check"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Lógica do Teclado e Roteamento -->
+    <script>
+        let currentPin = "";
+        const maxDigits = 4; // Ajuste o tamanho do PIN aqui
+
+        function updateDisplay() {
+            const dots = document.querySelectorAll('.pin-dot');
+            dots.forEach((dot, index) => {
+                if (index < currentPin.length) {
+                    dot.classList.add('bg-slate-800', 'border-slate-800');
+                    dot.classList.remove('border-slate-300');
+                } else {
+                    dot.classList.remove('bg-slate-800', 'border-slate-800');
+                    dot.classList.add('border-slate-300');
+                }
+            });
+            document.getElementById('mensagemErro').classList.add('opacity-0');
+        }
+
+        function addNumber(num) {
+            if (currentPin.length < maxDigits) {
+                currentPin += num.toString();
+                updateDisplay();
+                // Submissão automática ao atingir 4 dígitos
+                if (currentPin.length === maxDigits) {
+                    setTimeout(submitPin, 200); 
+                }
+            }
+        }
+
+        function clearPin() {
+            currentPin = currentPin.slice(0, -1);
+            updateDisplay();
+        }
+
+        function mostrarErro() {
+            currentPin = "";
+            updateDisplay();
+            const msgErro = document.getElementById('mensagemErro');
+            msgErro.classList.remove('opacity-0');
+            
+            // Treme a caixa (Feedback visual de erro)
+            const box = document.querySelector('.max-w-sm');
+            box.classList.add('animate-pulse');
+            setTimeout(() => box.classList.remove('animate-pulse'), 500);
+        }
+
+        function submitPin() {
+            if (currentPin.length === 0) return;
+
+            // ===== LÓGICA DE COMPLIANCE DE PERFIS =====
+            // Em produção, isso fará um "fetch('/login')" para o app.py
+            // Por agora, simulei 2 usuários no Javascript para você testar a navegação!
+            
+            const PIN_MECANICO = "1234";
+            const PIN_OPERADOR = "5678";
+
+            if (currentPin === PIN_MECANICO) {
+                // Roteia para a tela de entrega técnica que fizemos antes
+                window.location.href = "/tela_liberacao_oficina.html"; 
+            } 
+            else if (currentPin === PIN_OPERADOR) {
+                // Roteia para a tela de seleção de equipamento normal
+                window.location.href = "/tela_selecao_equipamento.html"; // Substitua pelo nome do seu HTML de operador
+            } 
+            else {
+                mostrarErro();
+            }
+        }
+    </script>
+</body>
+</html>

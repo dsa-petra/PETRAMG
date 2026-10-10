@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberação de Equipamentos - Oficina Petra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Animação suave para o Modal */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.3s ease-out; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-tools text-amber-500 text-2xl"></i>
+                <h1 class="text-xl font-bold">Oficina Petra <span class="text-sm font-normal text-slate-400">| Liberação de Frota</span></h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center border border-slate-500">
+                    <i class="fas fa-user-cog text-sm"></i>
+                </div>
+                <span class="text-sm hidden sm:block">Mecânico Responsável</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="flex justify-between items-end mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">Equipamentos no Pátio</h2>
+                <p class="text-slate-500 text-sm mt-1">Selecione uma máquina para realizar a entrega técnica operacional.</p>
+            </div>
+        </div>
+
+        <!-- Grid de Cartões de Equipamentos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gridEquipamentos">
+            
+            <!-- Cartão: Perfuratriz (Aguardando Liberação) -->
+            <div class="bg-white rounded-xl shadow-sm border-l-4 border-amber-500 overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onclick="abrirModal('Perfuratriz Wolf Fox 8-20', 'PF-01')">
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 mb-2">
+                                <i class="fas fa-clock"></i> Aguardando Liberação
+                            </span>
+                            <h3 class="text-lg font-bold">Perfuratriz Wolf Fox 8-20</h3>
+                            <p class="text-sm text-slate-500">TAG: PF-01</p>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+                            <i class="fas fa-tractor text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                        <span class="text-slate-500"><i class="fas fa-wrench mr-1"></i> Manutenção Preventiva OK</span>
+                        <button class="text-amber-600 font-semibold hover:text-amber-700">Liberar <i class="fas fa-arrow-right ml-1"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cartão: Escavadeira (Aguardando Liberação) -->
+            <div class="bg-white rounded-xl shadow-sm border-l-4 border-amber-500 overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onclick="abrirModal('Escavadeira Volvo EC460B', 'UC-11')">
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 mb-2">
+                                <i class="fas fa-clock"></i> Aguardando Liberação
+                            </span>
+                            <h3 class="text-lg font-bold">Escavadeira Volvo EC460B</h3>
+                            <p class="text-sm text-slate-500">TAG: UC-11</p>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+                            <i class="fas fa-snowplow text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                        <span class="text-slate-500"><i class="fas fa-cog mr-1"></i> Troca de Mangueiras OK</span>
+                        <button class="text-amber-600 font-semibold hover:text-amber-700">Liberar <i class="fas fa-arrow-right ml-1"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cartão: Carregadeira (Já Liberada - Apenas Visualização) -->
+            <div class="bg-white rounded-xl shadow-sm border-l-4 border-emerald-500 overflow-hidden opacity-75">
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 mb-2">
+                                <i class="fas fa-check-circle"></i> Liberado p/ Operação
+                            </span>
+                            <h3 class="text-lg font-bold">Carregadeira Volvo L120F</h3>
+                            <p class="text-sm text-slate-500">TAG: UC-15</p>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-emerald-500">
+                            <i class="fas fa-truck-pickup text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                        <span class="text-slate-500">Liberado hoje às 06:15</span>
+                        <span class="text-emerald-600 font-semibold"><i class="fas fa-lock mr-1"></i> Pátio</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal de Checklist de Entrega Técnica -->
+    <div id="modalLiberacao" class="fixed inset-0 bg-slate-900/75 flex items-center justify-center z-50 hidden backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800" id="modalEquipNome">Nome do Equipamento</h3>
+                    <p class="text-sm text-slate-500" id="modalEquipTag">TAG</p>
+                </div>
+                <button onclick="fecharModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="bg-blue-50 text-blue-800 text-sm p-3 rounded-lg border border-blue-100 mb-6 flex gap-3">
+                    <i class="fas fa-info-circle mt-0.5"></i>
+                    <p>Confirme os itens abaixo para liberar o equipamento no sistema RDO do operador.</p>
+                </div>
+
+                <form id="formChecklist">
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Checklist Obrigatório</h4>
+                    
+                    <div class="space-y-4">
+                        <!-- Item 1 -->
+                        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-200">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 checklist-item">
+                            </div>
+                            <div>
+                                <span class="block text-sm font-medium text-slate-800">Abastecimento e Fluidos</span>
+                                <span class="block text-xs text-slate-500">Combustível cheio, nível de óleo do motor e hidráulico verificados e sem vazamentos aparentes.</span>
+                            </div>
+                        </label>
+
+                        <!-- Item 2 -->
+                        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-200">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 checklist-item">
+                            </div>
+                            <div>
+                                <span class="block text-sm font-medium text-slate-800">Freios e Direção</span>
+                                <span class="block text-xs text-slate-500">Sistemas de freio de serviço/estacionamento e comandos de direção/esteira operantes.</span>
+                            </div>
+                        </label>
+
+                        <!-- Item 3 -->
+                        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-200">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 checklist-item">
+                            </div>
+                            <div>
+                                <span class="block text-sm font-medium text-slate-800">Itens de Segurança</span>
+                                <span class="block text-xs text-slate-500">Extintor no prazo, alarme sonoro de ré, faróis, giroflex e buzina em pleno funcionamento.</span>
+                            </div>
+                        </label>
+
+                        <!-- Item 4 -->
+                        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-200">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 checklist-item">
+                            </div>
+                            <div>
+                                <span class="block text-sm font-medium text-slate-800">Estrutura e Implementos</span>
+                                <span class="block text-xs text-slate-500">Concha, dentes, rompedor ou hastes travados e sem trincas estruturais críticas visíveis.</span>
+                            </div>
+                        </label>
+
+                        <!-- Item 5 -->
+                        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-200">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 checklist-item">
+                            </div>
+                            <div>
+                                <span class="block text-sm font-medium text-slate-800">Limpeza da Cabine</span>
+                                <span class="block text-xs text-slate-500">Cabine higienizada e livre de detritos ou ferramentas soltas.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="mt-5">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Observações da Oficina (Opcional)</label>
+                        <textarea rows="2" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Ex: Correia substituída. Operador deve amanciar motor nas primeiras 2h..."></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex gap-3 justify-end">
+                <button onclick="fecharModal()" class="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50">Cancelar</button>
+                <button onclick="liberarEquipamento()" id="btnLiberar" disabled class="px-5 py-2.5 rounded-lg text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm">
+                    <i class="fas fa-signature mr-2"></i> Assinar e Liberar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Interação -->
+    <script>
+        const modal = document.getElementById('modalLiberacao');
+        const checkboxes = document.querySelectorAll('.checklist-item');
+        const btnLiberar = document.getElementById('btnLiberar');
+
+        function abrirModal(nome, tag) {
+            document.getElementById('modalEquipNome').innerText = nome;
+            document.getElementById('modalEquipTag').innerText = "TAG: " + tag;
+            
+            // Resetar formulário
+            document.getElementById('formChecklist').reset();
+            verificarChecklist();
+            
+            modal.classList.remove('hidden');
+        }
+
+        function fecharModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Verifica se todos os checkboxes foram marcados para habilitar o botão de liberar
+        function verificarChecklist() {
+            const todosMarcados = Array.from(checkboxes).every(cb => cb.checked);
+            btnLiberar.disabled = !todosMarcados;
+            
+            if (todosMarcados) {
+                btnLiberar.classList.replace('bg-amber-500', 'bg-emerald-600');
+                btnLiberar.classList.replace('hover:bg-amber-600', 'hover:bg-emerald-700');
+                btnLiberar.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Equipamento Pronto';
+            } else {
+                btnLiberar.classList.replace('bg-emerald-600', 'bg-amber-500');
+                btnLiberar.classList.replace('hover:bg-emerald-700', 'hover:bg-amber-600');
+                btnLiberar.innerHTML = '<i class="fas fa-signature mr-2"></i> Assinar e Liberar';
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', verificarChecklist);
+        });
+
+        function liberarEquipamento() {
+            const nome = document.getElementById('modalEquipNome').innerText;
+            
+            // Aqui entrará a lógica de salvar no LocalStorage ou enviar para o Flask
+            // Exemplo: localStorage.setItem('status_' + tag, 'liberado');
+
+            alert(`✅ Sucesso!\n\nO equipamento ${nome} foi liberado pela oficina. Agora ele já aparece disponível na tela de seleção do Operador.`);
+            fecharModal();
+            
+            // Opcional: recarregar a tela para atualizar o layout visualmente
+            // window.location.reload();
+        }
+    </script>
+</body>
+</html>
