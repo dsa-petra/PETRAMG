@@ -8,6 +8,11 @@ app = Flask(__name__)
 def index():
     return render_template('tela_login_pin.html')
 
+# Rota de navegação: Hub Central (Gestão/Visão Geral)
+@app.route('/tela_hub_central.html')
+def tela_hub_central():
+    return render_template('tela_hub_central.html')
+
 # Rota de navegação: Tela da Oficina / Manutenção
 @app.route('/tela_liberacao_oficina.html')
 def tela_liberacao_oficina():
@@ -16,19 +21,18 @@ def tela_liberacao_oficina():
 # Rota de navegação: Tela do Operador (Seleção de Equipamento)
 @app.route('/tela_selecao_equipamento.html')
 def tela_selecao_equipamento():
-    # Nota: Certifique-se de que tem um ficheiro com este nome exato 
-    # na sua pasta 'templates', ou altere aqui para o nome real do seu HTML de RDO.
     return render_template('tela_selecao_equipamento.html')
 
-# Rota de simulação de Login pelo PIN (Pronto para integrar com Supabase)
+# Rota de simulação de Login pelo PIN
 @app.route('/login', methods=['POST'])
 def login():
     dados = request.json
     pin_digitado = dados.get('pin')
     
-    # Simulação dos perfis de acesso
+    # Simulação dos perfis de acesso (Será substituído pelo Supabase futuramente)
     PIN_MECANICO = "1234"
     PIN_OPERADOR = "5678"
+    PIN_SUPERVISOR = "9999"
     
     if pin_digitado == PIN_MECANICO:
         usuario = {"nome": "Equipe de Manutenção", "perfil": "manutencao"}
@@ -38,6 +42,10 @@ def login():
         usuario = {"nome": "Equipe de Operação", "perfil": "operador"}
         return jsonify({"status": "sucesso", "redirecionar": "/tela_selecao_equipamento.html", "usuario": usuario})
         
+    elif pin_digitado == PIN_SUPERVISOR:
+        usuario = {"nome": "Gestor", "perfil": "supervisor"}
+        return jsonify({"status": "sucesso", "redirecionar": "/tela_hub_central.html", "usuario": usuario})
+        
     else:
         return jsonify({"status": "erro", "mensagem": "PIN não encontrado"}), 401
 
@@ -46,8 +54,6 @@ def login():
 def salvar_apontamento():
     dados = request.json
     print("Dados de apontamento recebidos do campo:", dados)
-    
-    # Aqui entrará o código do Supabase futuramente
     
     return jsonify({"status": "sucesso", "mensagem": "Apontamento gravado com sucesso!"})
 

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Central RDO - Petra Agregados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            500: '#f59e0b', // O amarelo industrial do Stitch
+                            600: '#d97706',
+                        },
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a', // O fundo escuro principal
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-300 font-sans antialiased flex h-screen overflow-hidden">
+
+    <!-- Sidebar de Navegação (Design Stitch) -->
+    <aside class="w-64 bg-slate-800 border-r border-slate-700 flex flex-col justify-between hidden md:flex shrink-0">
+        <div>
+            <!-- Logotipo da Sidebar -->
+            <div class="h-20 flex items-center px-6 border-b border-slate-700 bg-slate-900">
+                <i class="fas fa-hard-hat text-amber-500 text-3xl mr-3"></i>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-tight leading-none">RDO PETRA</h1>
+                    <span class="text-xs text-amber-500 font-semibold tracking-wider">MINERAÇÃO</span>
+                </div>
+            </div>
+
+            <!-- Menus -->
+            <nav class="p-4 space-y-2">
+                <!-- Ativo -->
+                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-amber-500/10 text-amber-500 rounded-lg font-medium border border-amber-500/20 transition-colors">
+                    <i class="fas fa-chart-line w-5 text-center"></i>
+                    <span>Dashboard Central</span>
+                </a>
+                <a href="/tela_selecao_equipamento.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-700 hover:text-white rounded-lg font-medium transition-colors">
+                    <i class="fas fa-tractor w-5 text-center"></i>
+                    <span>Operação (RDO)</span>
+                </a>
+                <a href="/tela_liberacao_oficina.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-700 hover:text-white rounded-lg font-medium transition-colors">
+                    <i class="fas fa-tools w-5 text-center"></i>
+                    <span>Oficina & Manutenção</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-700 hover:text-white rounded-lg font-medium transition-colors">
+                    <i class="fas fa-cogs w-5 text-center"></i>
+                    <span>Configurações</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Rodapé da Sidebar: Perfil logado -->
+        <div class="p-4 border-t border-slate-700">
+            <div class="flex items-center gap-3 px-4 py-2 bg-slate-900 rounded-lg">
+                <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center">
+                    <i class="fas fa-user-shield text-slate-300 text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-white font-medium">Gestor / Supervisor</p>
+                    <p class="text-xs text-slate-500">ID: 001</p>
+                </div>
+            </div>
+            <button onclick="window.location.href='/'" class="w-full mt-3 flex items-center justify-center gap-2 px-4 py-2 text-sm text-slate-400 hover:text-red-400 transition-colors">
+                <i class="fas fa-sign-out-alt"></i> Sair do Sistema
+            </button>
+        </div>
+    </aside>
+
+    <!-- Área de Conteúdo Central -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-900">
+        
+        <!-- Header Mobile (Aparece só em telas pequenas) -->
+        <header class="md:hidden h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-4">
+            <div class="flex items-center">
+                <i class="fas fa-hard-hat text-amber-500 text-xl mr-2"></i>
+                <h1 class="text-lg font-bold text-white">RDO PETRA</h1>
+            </div>
+            <button class="text-slate-400 text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </header>
+
+        <!-- Conteúdo do Dashboard -->
+        <div class="p-6 md:p-10 max-w-7xl mx-auto w-full">
+            
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-2">Visão Geral da Operação</h2>
+                <p class="text-slate-400">Resumo em tempo real da disponibilidade da frota e produção de agregados.</p>
+            </div>
+
+            <!-- Cards de KPIs (Key Performance Indicators) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                
+                <!-- KPI 1 -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg">85% Disponibilidade</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-white mb-1">12</h3>
+                    <p class="text-sm font-medium text-slate-400 uppercase tracking-wide">Máquinas em Operação</p>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-tools text-amber-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded-lg">Manutenção Preventiva</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-white mb-1">2</h3>
+                    <p class="text-sm font-medium text-slate-400 uppercase tracking-wide">Equipamentos na Oficina</p>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-truck-loading text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-4xl font-black text-white mb-1">142</h3>
+                    <p class="text-sm font-medium text-slate-400 uppercase tracking-wide">Viagens de Basculante Hoje</p>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-red-500/20 text-red-400 rounded-lg">Atenção</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-white mb-1">1</h3>
+                    <p class="text-sm font-medium text-slate-400 uppercase tracking-wide">Alerta de Avaria Crítica</p>
+                </div>
+
+            </div>
+
+            <!-- Atalhos Rápidos (Estilo Cartões de Módulo) -->
+            <h3 class="text-xl font-bold text-white mb-4">Acesso Rápido a Módulos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Acesso: Oficina -->
+                <button onclick="window.location.href='/tela_liberacao_oficina.html'" class="group bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl p-6 text-left transition-all duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <i class="fas fa-wrench text-amber-500 text-3xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas fa-arrow-right text-slate-500 group-hover:text-amber-500 transition-colors"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Liberação de Frota</h4>
+                    <p class="text-sm text-slate-400">Entrega técnica, checklist de manutenção e assinatura de liberação de máquinas.</p>
+                </button>
+
+                <!-- Acesso: RDO Operação -->
+                <button onclick="window.location.href='/tela_selecao_equipamento.html'" class="group bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl p-6 text-left transition-all duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <i class="fas fa-clipboard-list text-emerald-500 text-3xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas fa-arrow-right text-slate-500 group-hover:text-emerald-500 transition-colors"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Parte Diária (RDO)</h4>
+                    <p class="text-sm text-slate-400">Apontamentos de produção, paradas, consumo diesel e telemetria offline.</p>
+                </button>
+
+                <!-- Acesso: Configurações -->
+                <button class="group bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-2xl p-6 text-left transition-all duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <i class="fas fa-sliders-h text-blue-500 text-3xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fas fa-arrow-right text-slate-500 group-hover:text-blue-500 transition-colors"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">Cadastro / Parâmetros</h4>
+                    <p class="text-sm text-slate-400">Gestão de colaboradores, senhas, adição de novos equipamentos e metas produtivas.</p>
+                </button>
+
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
