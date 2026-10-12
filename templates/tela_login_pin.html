@@ -55,10 +55,12 @@
         </div>
     </div>
 
-    <!-- Script de Lógica do Teclado e Roteamento -->
-    <script>
+    <!-- Módulo Controlador (Inteligência Real do Supabase) -->
+    <script type="module">
+        import { processarLogin } from '/static/js/operacionalController.js';
+
         let currentPin = "";
-        const maxDigits = 4; // Ajuste o tamanho do PIN aqui
+        const maxDigits = 4; 
 
         function updateDisplay() {
             const dots = document.querySelectorAll('.pin-dot');
@@ -74,7 +76,8 @@
             document.getElementById('mensagemErro').classList.add('opacity-0');
         }
 
-        function addNumber(num) {
+        // Tornamos as funções globais (window.*) porque estão dentro de um módulo (<script type="module">)
+        window.addNumber = function(num) {
             if (currentPin.length < maxDigits) {
                 currentPin += num.toString();
                 updateDisplay();
@@ -85,43 +88,32 @@
             }
         }
 
-        function clearPin() {
+        window.clearPin = function() {
             currentPin = currentPin.slice(0, -1);
             updateDisplay();
         }
 
-        function mostrarErro() {
+        window.mostrarErro = function(mensagem = "PIN incorreto. Tente novamente.") {
             currentPin = "";
             updateDisplay();
             const msgErro = document.getElementById('mensagemErro');
+            msgErro.innerText = mensagem; // Mostra o erro real que vem da base de dados
             msgErro.classList.remove('opacity-0');
             
-            // Treme a caixa (Feedback visual de erro)
+            // Feedback visual do Stitch (treme a caixa)
             const box = document.querySelector('.max-w-sm');
             box.classList.add('animate-pulse');
             setTimeout(() => box.classList.remove('animate-pulse'), 500);
         }
 
-        function submitPin() {
+        window.submitPin = async function() {
             if (currentPin.length === 0) return;
 
-            // ===== LÓGICA DE COMPLIANCE DE PERFIS =====
-            // Em produção, isso fará um "fetch('/login')" para o app.py
-            // Por agora, simulei 2 usuários no Javascript para você testar a navegação!
+            // Chama o arquivo Javascript que conecta e pesquisa na tabela tb_operadores do Supabase
+            const resultado = await processarLogin(currentPin);
             
-            const PIN_MECANICO = "1234";
-            const PIN_OPERADOR = "5678";
-
-            if (currentPin === PIN_MECANICO) {
-                // Roteia para a tela de entrega técnica que fizemos antes
-                window.location.href = "/tela_liberacao_oficina.html"; 
-            } 
-            else if (currentPin === PIN_OPERADOR) {
-                // Roteia para a tela de seleção de equipamento normal
-                window.location.href = "/tela_selecao_equipamento.html"; // Substitua pelo nome do seu HTML de operador
-            } 
-            else {
-                mostrarErro();
+            if (!resultado.sucesso) {
+                mostrarErro(resultado.mensagem);
             }
         }
     </script>
