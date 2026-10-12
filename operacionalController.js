@@ -1,48 +1,49 @@
 import { supabase } from './supabaseClient.js';
 
 export async function processarLogin(pinDigitado) {
+    // Tratamento imediato para área de sombra (offline)
+    if (!navigator.onLine) {
+        return { sucesso: false, mensagem: "Sem sinal. Aproxime-se de uma área com rede para o acesso." };
+    }
+
     try {
-        // 1. Vai à tabela tb_operadores e procura quem tem a senha igual ao PIN digitado
         const { data: operador, error } = await supabase
             .from('tb_operadores')
             .select('matricula_operador, nome_operador, perfil_acesso, ativo')
             .eq('senha_hash', pinDigitado)
             .single();
 
-        // 2. Se houver erro ou não encontrar ninguém com esse PIN
         if (error || !operador) {
-            console.warn("Erro ao buscar operador:", error);
-            return { sucesso: false, mensagem: "PIN não encontrado." };
+            return { sucesso: false, mensagem: "PIN não reconhecido. Verifique a numeração." };
         }
 
-        // 3. Verifica se o operador está inativo/bloqueado
-        if (operador.ativo === false) {
-            return { sucesso: false, mensagem: "Operador inativo." };
+        if (!operador.ativo) {
+            return { sucesso: false, mensagem: "Matrícula inativa. Fale com a supervisão." };
         }
 
-        // 4. Se chegou aqui, o PIN está certo! Guarda os dados para usar no modo offline
-        localStorage.setItem('rdo_sessao_atual', JSON.stringify(operador));
+        // Persistência da sessão para uso offline na cava
+        localStorage.setItem('operador_atual', JSON.stringify(operador));
 
-        // 5. Encaminha para a tela certa dependendo do perfil
+        // Roteamento baseado no perfil (direcionando para as tuas telas do Stitch)
         const perfil = operador.perfil_acesso.toLowerCase();
-        
+        let destino = "";
+
         if (perfil === 'manutencao') {
-            window.location.href = "/check_list_pr_operacional.html";
+            destino = "/tela_liberacao_oficina.html"; 
         } 
-        else if (perfil === 'operador') {
-            window.location.href = "/apontamento_basculante_ut_34.html"; 
+        else if (perfil === 'operacao') {
+            destino = "/tela_selecao_equipamento.html"; 
         } 
-        else if (perfil === 'gestao' || perfil === 'admin' || perfil === 'supervisor') {
-            window.location.href = "/tela_hub_central.html";
+        else if (perfil === 'gestao' || perfil === 'admin') {
+            destino = "/tela_hub_central.html"; 
         } 
         else {
-            return { sucesso: false, mensagem: "Perfil desconhecido." };
+            return { sucesso: false, mensagem: "Perfil sem acesso definido." };
         }
 
-        return { sucesso: true };
+        return { sucesso: true, rota: destino };
 
     } catch (err) {
-        console.error("Falha de conexão:", err);
-        return { sucesso: false, mensagem: "Erro de rede. Verifique a internet." };
+        return { sucesso: false, mensagem: "Falha no sistema. Tente novamente." };
     }
 }
